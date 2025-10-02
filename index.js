@@ -72,8 +72,18 @@ function fetchJson(url) {
 }
 
 async function fetchSymbols(platform) {
-    const json = await fetchJson(platform.symbolsUrl);
-    return platform.extractSymbols(json);
+    try {
+        const json = await fetchJson(platform.symbolsUrl);
+        if (platform.name === 'binance') {
+            console.log('[DEBUG Binance] Réponse API:', JSON.stringify(json).slice(0, 500));
+        }
+        return platform.extractSymbols(json);
+    } catch (err) {
+        if (platform.name === 'binance') {
+            console.error('[DEBUG Binance] Erreur fetchSymbols:', err);
+        }
+        return [];
+    }
 }
 
 async function getPriceAndVariation(platform, symbol) {
