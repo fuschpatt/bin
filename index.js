@@ -9,6 +9,31 @@ const excludeSymbols = ['XCADUSDT', 'VOLTUSDT','SETF1001USDT','SBTCSUSDT','MCHUS
 const fs = require('fs');
 const https = require('https');
 
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Routes API pour Render
+app.get('/binance', (req, res) => {
+    res.set('Content-Type', 'text/plain');
+    fs.readFile(__dirname + '/binance.txt', 'utf8', (err, data) => {
+        if (err) return res.status(404).send('Aucune donnée');
+        res.send(data);
+    });
+});
+app.get('/bitget', (req, res) => {
+    res.set('Content-Type', 'text/plain');
+    fs.readFile(__dirname + '/bitget.txt', 'utf8', (err, data) => {
+        if (err) return res.status(404).send('Aucune donnée');
+        res.send(data);
+    });
+});
+app.get('/', (req, res) => res.send('API Crypto OK'));
+
+app.listen(PORT, () => {
+    console.log('Serveur Express démarré sur le port', PORT);
+});
+
 const platforms = [
     {
         name: 'binance',
