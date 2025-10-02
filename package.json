@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "commonjs",
+  "license": "MIT",
   "scripts": {
     "start": "node index.js"
   },
